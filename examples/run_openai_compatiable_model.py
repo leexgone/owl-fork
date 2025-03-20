@@ -12,6 +12,7 @@
 # limitations under the License.
 # ========= Copyright 2023-2024 @ CAMEL-AI.org. All Rights Reserved. =========
 import os
+import sys
 
 from dotenv import load_dotenv
 from camel.models import ModelFactory
@@ -64,7 +65,7 @@ def construct_society(question: str) -> RolePlaying:
             url="https://dashscope.aliyuncs.com/compatible-mode/v1",
             model_config_dict={"temperature": 0.4, "max_tokens": 4096},
         ),
-        "web": ModelFactory.create(
+        "browsing": ModelFactory.create(
             model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
             model_type="qwen-vl-max",
             api_key=os.getenv("QWEN_API_KEY"),
@@ -128,10 +129,14 @@ def construct_society(question: str) -> RolePlaying:
 def main():
     r"""Main function to run the OWL system with an example question."""
     # Example research question
-    question = "Navigate to Amazon.com and identify one product that is attractive to coders. Please provide me with the product name and price. No need to verify your answer."
+    default_task = "Navigate to Amazon.com and identify one product that is attractive to coders. Please provide me with the product name and price. No need to verify your answer."
+
+    # Override default task if command line argument is provided
+    task = sys.argv[1] if len(sys.argv) > 1 else default_task
 
     # Construct and run the society
-    society = construct_society(question)
+    society = construct_society(task)
+
     answer, chat_history, token_count = run_society(society)
 
     # Output the result

@@ -71,7 +71,7 @@ def main():
             model_type=ModelType.GPT_4O,
             model_config_dict=ChatGPTConfig(temperature=0, top_p=1).as_dict(),
         ),
-        "web": ModelFactory.create(
+        "browsing": ModelFactory.create(
             model_platform=ModelPlatformType.OPENAI,
             model_type=ModelType.GPT_4O,
             model_config_dict=ChatGPTConfig(temperature=0, top_p=1).as_dict(),

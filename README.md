@@ -384,7 +384,7 @@ You can run OWL agent with your own task by modifying the `examples/run.py` scri
 
 ```python
 # Define your own task
-question = "Task description here."
+task = "Task description here."
 
 society = construct_society(question)
 answer, chat_history, token_count = run_society(society)
@@ -396,7 +396,7 @@ For uploading files, simply provide the file path along with your question:
 
 ```python
 # Task with a local file (e.g., file path: `tmp/example.docx`)
-question = "What is in the given DOCX file? Here is the file path: tmp/example.docx"
+task = "What is in the given DOCX file? Here is the file path: tmp/example.docx"
 
 society = construct_society(question)
 answer, chat_history, token_count = run_society(society)

@@ -377,7 +377,7 @@ python examples/run_ollama.py
 
 ```python
 # Define your own task
-question = "Task description here."
+task = "Task description here."
 
 society = construct_society(question)
 answer, chat_history, token_count = run_society(society)
@@ -389,7 +389,7 @@ print(f"\033[94mAnswer: {answer}\033[0m")
 
 ```python
 # 处理本地文件（例如，文件路径为 `tmp/example.docx`）
-question = "给定的 DOCX 文件中有什么内容？文件路径如下：tmp/example.docx"
+task = "给定的 DOCX 文件中有什么内容？文件路径如下：tmp/example.docx"
 
 society = construct_society(question)
 answer, chat_history, token_count = run_society(society)
