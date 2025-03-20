@@ -39,10 +39,12 @@ def construct_society(question: str) -> OwlRolePlaying:
 
     tools = [
         *CodeExecutionToolkit(sandbox="subprocess", verbose=True).get_tools(),
+        SearchToolkit().search_bing,
         SearchToolkit().search_duckduckgo,
         SearchToolkit().search_wiki,
+        SearchToolkit().search_baidu,
         *ExcelToolkit().get_tools(),
-        *FileWriteToolkit(output_dir="./").get_tools(),
+        *FileWriteToolkit(output_dir="E:/Test/").get_tools(),
     ]
 
     user_agent_kwargs = {"model": models["user"]}
@@ -66,7 +68,7 @@ def main():
     load_dotenv()
     logger.set_log_level(level=os.getenv("CAMEL_LOGGING_LEVEL", "INFO"))
     
-    question = sys.argv[1] if len(sys.argv) > 1 else "搜索DeepSeek最近的相关新闻，整理成一份分析报告，最后保存到本地"
+    question = sys.argv[1] if len(sys.argv) > 1 else "搜索DeepSeek最近的相关新闻，整理成一份分析报告，所有资料保存到本地存储"
     society = construct_society(question)
     anwser, chat_history, token_count = run_society(society)
     print(f"Answer: {anwser}")
