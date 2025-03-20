@@ -1,14 +1,22 @@
 services:
   owl:
-    build:
-      context: ..
-      dockerfile: .container/Dockerfile
+    # Option 1: Use pre-built image from Docker Hub
+    image: mugglejinx/owl:latest
+    
+    # Option 2: Build image locally
+    # Uncomment the following lines and comment out the 'image' line above to build locally
+    # build:
+    #   context: ..
+    #   dockerfile: .container/Dockerfile
+    
     volumes:
-      # 挂载.env文件，方便配置API密钥
+      # Mount .env file for easy API key configuration
       - ../owl/.env:/app/owl/.env
-      # 挂载数据目录
-      - ./data:/app/data
-      # 挂载缓存目录，避免重复下载
+      # Mount examples folder to support running code examples inside the Docker container
+      - ../examples:/app/examples
+      # Mount data directory
+      - ./data:/app/owl/data
+      # Mount cache directories to avoid repeated downloads
       - ~/.cache/pip:/root/.pip/cache
       - ~/.cache/playwright:/root/.cache/ms-playwright
     environment:
@@ -17,18 +25,21 @@ services:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=1
       - TERM=xterm-256color
+      - GRADIO_SERVER_NAME=0.0.0.0
+      - GRADIO_SERVER_PORT=7860
+      - PYTHONPATH=.
     ports:
-      - "8000:8000"
+      - "7860:7860"
     stdin_open: true
     tty: true
     shm_size: 2gb
-    # 简化资源限制
+    # Simplify resource limits
     deploy:
       resources:
         limits:
           memory: 4G
 
-# 定义持久化卷，用于缓存 | Define persistent volumes for caching
+# Define persistent volumes for caching
 volumes:
   playwright-cache:
   pip-cache:

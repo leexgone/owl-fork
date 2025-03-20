@@ -451,26 +451,37 @@ def run_society(
     input_msg = society.init_chat(init_prompt)
     for _round in range(round_limit):
         assistant_response, user_response = society.step(input_msg)
-        overall_completion_token_count += (
-            assistant_response.info["usage"]["completion_tokens"]
-            + user_response.info["usage"]["completion_tokens"]
-        )
+        # Check if usage info is available before accessing it
+        if assistant_response.info.get("usage") and user_response.info.get("usage"):
+            overall_completion_token_count += assistant_response.info["usage"].get(
+                "completion_tokens", 0
+            ) + user_response.info["usage"].get("completion_tokens", 0)
+            overall_prompt_token_count += assistant_response.info["usage"].get(
+                "prompt_tokens", 0
+            ) + user_response.info["usage"].get("prompt_tokens", 0)
 
         # convert tool call to dict
         tool_call_records: List[dict] = []
-        for tool_call in assistant_response.info["tool_calls"]:
-            tool_call_records.append(tool_call.as_dict())
+        if assistant_response.info.get("tool_calls"):
+            for tool_call in assistant_response.info["tool_calls"]:
+                tool_call_records.append(tool_call.as_dict())
 
         _data = {
-            "user": user_response.msg.content,
-            "assistant": assistant_response.msg.content,
+            "user": user_response.msg.content
+            if hasattr(user_response, "msg") and user_response.msg
+            else "",
+            "assistant": assistant_response.msg.content
+            if hasattr(assistant_response, "msg") and assistant_response.msg
+            else "",
             "tool_calls": tool_call_records,
         }
 
         chat_history.append(_data)
-        logger.info(f"Round #{_round} user_response:\n {user_response.msgs[0].content}")
         logger.info(
-            f"Round #{_round} assistant_response:\n {assistant_response.msgs[0].content}"
+            f"Round #{_round} user_response:\n {user_response.msgs[0].content if user_response.msgs and len(user_response.msgs) > 0 else ''}"
+        )
+        logger.info(
+            f"Round #{_round} assistant_response:\n {assistant_response.msgs[0].content if assistant_response.msgs and len(assistant_response.msgs) > 0 else ''}"
         )
 
         if (
@@ -505,35 +516,45 @@ async def arun_society(
     input_msg = society.init_chat(init_prompt)
     for _round in range(round_limit):
         assistant_response, user_response = await society.astep(input_msg)
-        overall_prompt_token_count += assistant_response.info["usage"][
-            "completion_tokens"
-        ]
-        overall_prompt_token_count += (
-            assistant_response.info["usage"]["prompt_tokens"]
-            + user_response.info["usage"]["prompt_tokens"]
-        )
+        # Check if usage info is available before accessing it
+        if assistant_response.info.get("usage") and user_response.info.get("usage"):
+            overall_prompt_token_count += assistant_response.info["usage"].get(
+                "completion_tokens", 0
+            )
+            overall_prompt_token_count += assistant_response.info["usage"].get(
+                "prompt_tokens", 0
+            ) + user_response.info["usage"].get("prompt_tokens", 0)
 
         # convert tool call to dict
         tool_call_records: List[dict] = []
-        for tool_call in assistant_response.info["tool_calls"]:
-            tool_call_records.append(tool_call.as_dict())
+        if assistant_response.info.get("tool_calls"):
+            for tool_call in assistant_response.info["tool_calls"]:
+                tool_call_records.append(tool_call.as_dict())
 
         _data = {
-            "user": user_response.msg.content,
-            "assistant": assistant_response.msg.content,
+            "user": user_response.msg.content
+            if hasattr(user_response, "msg") and user_response.msg
+            else "",
+            "assistant": assistant_response.msg.content
+            if hasattr(assistant_response, "msg") and assistant_response.msg
+            else "",
             "tool_calls": tool_call_records,
         }
 
         chat_history.append(_data)
-        logger.info(f"Round #{_round} user_response:\n {user_response.msgs[0].content}")
         logger.info(
-            f"Round #{_round} assistant_response:\n {assistant_response.msgs[0].content}"
+            f"Round #{_round} user_response:\n {user_response.msgs[0].content if user_response.msgs and len(user_response.msgs) > 0 else ''}"
+        )
+        logger.info(
+            f"Round #{_round} assistant_response:\n {assistant_response.msgs[0].content if assistant_response.msgs and len(assistant_response.msgs) > 0 else ''}"
         )
 
+        # Check other termination conditions
         if (
             assistant_response.terminated
             or user_response.terminated
             or "TASK_DONE" in user_response.msg.content
+            or "任务已完成" in user_response.msg.content
         ):
             break
 

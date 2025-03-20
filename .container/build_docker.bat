@@ -5,6 +5,11 @@ setlocal enabledelayedexpansion
 echo 在Windows上构建Docker镜像... 
 echo Building Docker image on Windows...
 
+REM 设置Docker BuildKit环境变量
+REM Set Docker BuildKit environment variables
+set DOCKER_BUILDKIT=1
+set COMPOSE_DOCKER_CLI_BUILD=1
+
 REM 设置配置变量
 REM Set configuration variables
 set CACHE_DIR=.docker-cache\pip
@@ -109,11 +114,6 @@ if %ERRORLEVEL% EQU 0 (
         exit /b 1
     )
 )
-
-REM 设置Docker BuildKit环境变量
-REM Set Docker BuildKit environment variables
-set DOCKER_BUILDKIT=1
-set COMPOSE_DOCKER_CLI_BUILD=1
 
 echo 启用Docker BuildKit加速构建...
 echo Enabling Docker BuildKit to accelerate build...

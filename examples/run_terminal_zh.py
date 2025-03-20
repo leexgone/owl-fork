@@ -12,30 +12,37 @@
 # limitations under the License.
 # ========= Copyright 2023-2024 @ CAMEL-AI.org. All Rights Reserved. =========
 from dotenv import load_dotenv
-
+import os
 from camel.models import ModelFactory
 from camel.toolkits import (
     SearchToolkit,
     BrowserToolkit,
     FileWriteToolkit,
+    TerminalToolkit,
 )
 from camel.types import ModelPlatformType, ModelType
 from camel.logger import set_log_level
 
-from utils import OwlRolePlaying, run_society
+from owl.utils import run_society
+from camel.societies import RolePlaying
 
-load_dotenv()
+import pathlib
+
+base_dir = pathlib.Path(__file__).parent.parent
+env_path = base_dir / "owl" / ".env"
+load_dotenv(dotenv_path=str(env_path))
+
 set_log_level(level="DEBUG")
 
 
-def construct_society(question: str) -> OwlRolePlaying:
+def construct_society(question: str) -> RolePlaying:
     r"""Construct a society of agents based on the given question.
 
     Args:
         question (str): The task or question to be addressed by the society.
 
     Returns:
-        OwlRolePlaying: A configured society of agents ready to address the
+        RolePlaying: A configured society of agents ready to address the
             question.
     """
 
@@ -73,6 +80,7 @@ def construct_society(question: str) -> OwlRolePlaying:
         SearchToolkit().search_duckduckgo,
         SearchToolkit().search_wiki,
         *FileWriteToolkit(output_dir="./").get_tools(),
+        *TerminalToolkit().get_tools(),
     ]
 
     # Configure agent roles and parameters
@@ -86,7 +94,7 @@ def construct_society(question: str) -> OwlRolePlaying:
     }
 
     # Create and return the society
-    society = OwlRolePlaying(
+    society = RolePlaying(
         **task_kwargs,
         user_role_name="user",
         user_agent_kwargs=user_agent_kwargs,
@@ -100,14 +108,17 @@ def construct_society(question: str) -> OwlRolePlaying:
 def main():
     r"""Main function to run the OWL system with an example question."""
     # Example research question
-    question = "Navigate to Amazon.com and identify one product that is attractive to coders. Please provide me with the product name and price. No need to verify your answer."
+    question = f"""打开百度搜索，总结一下camel-ai的camel框架的github star、fork数目等，并把数字用plot包写成python文件保存到"+{os.path.join
+(base_dir, 'final_output')}+"，用本地终端执行python文件显示图出来给我"""
 
     # Construct and run the society
     society = construct_society(question)
     answer, chat_history, token_count = run_society(society)
 
     # Output the result
-    print(f"\033[94mAnswer: {answer}\033[0m")
+    print(
+        f"\033[94mAnswer: {answer}\nChat History: {chat_history}\ntoken_count:{token_count}\033[0m"
+    )
 
 
 if __name__ == "__main__":

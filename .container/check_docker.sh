@@ -73,11 +73,11 @@ FREE_SPACE=$(df -h . | awk 'NR==2 {print $4}')
 echo "可用磁盘空间 | Available disk space: $FREE_SPACE"
 
 # 检查是否有.env文件 | Check if .env file exists
-if [ ! -f "owl/.env" ]; then
-    echo "警告 | Warning: 未找到owl/.env文件 | owl/.env file not found"
+if [ ! -f "../owl/.env" ]; then
+    echo "警告 | Warning: 未找到../owl/.env文件 | ../owl/.env file not found"
     echo "请运行以下命令创建环境变量文件 | Please run the following command to create environment variable file:"
-    echo "cp owl/.env_template owl/.env"
-    echo "然后编辑owl/.env文件，填写必要的API密钥 | Then edit owl/.env file and fill in necessary API keys"
+    echo "cp ../owl/.env_template ../owl/.env"
+    echo "然后编辑../owl/.env文件，填写必要的API密钥 | Then edit ../owl/.env file and fill in necessary API keys"
 else
     echo "环境变量文件已存在 | Environment variable file exists"
 fi

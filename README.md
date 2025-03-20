@@ -64,15 +64,11 @@ Our vision is to revolutionize how AI agents collaborate to solve real-world tas
 - [📋 Table of Contents](#-table-of-contents)
 - [🔥 News](#-news)
 - [🎬 Demo Video](#-demo-video)
-- [✨️ Core Features](#-core-features)
+- [✨️ Core Features](#️-core-features)
 - [🛠️ Installation](#️-installation)
-  - [**Clone the Github repository**](#clone-the-github-repository)
-  - [**Set up Environment**](#set-up-environment)
-  - [**Install Dependencies**](#install-dependencies)
-  - [**Setup Environment Variables**](#setup-environment-variables)
-  - [**Running with Docker**](#running-with-docker)
 - [🚀 Quick Start](#-quick-start)
 - [🧰 Toolkits and Capabilities](#-toolkits-and-capabilities)
+  - [Model Context Protocol (MCP)](#model-context-protocol-mcp)
 - [🌐 Web Interface](#-web-interface)
 - [🧪 Experiments](#-experiments)
 - [⏱️ Future Plans](#️-future-plans)
@@ -83,7 +79,6 @@ Our vision is to revolutionize how AI agents collaborate to solve real-world tas
 - [❓ FAQ](#-faq)
 - [📚 Exploring CAMEL Dependency](#-exploring-camel-dependency)
 - [⭐ Star History](#-star-history)
-
 
 # 🔥 News
 
@@ -104,6 +99,20 @@ Our vision is to revolutionize how AI agents collaborate to solve real-world tas
   </p>
 </div>
 
+<div style="background-color: #e3f2fd; padding: 12px; border-radius: 8px; border-left: 4px solid #1e88e5; margin: 10px 0;">
+  <h4 style="color: #1e88e5; margin: 0 0 8px 0;">
+    🎉 Latest Major Update - March 15, 2025
+  </h4>
+  <p style="margin: 0;">
+    <b>Significant Improvements:</b>
+    <ul style="margin: 5px 0 0 0; padding-left: 20px;">
+      <li>Restructured web-based UI architecture for enhanced stability 🏗️</li>
+      <li>Optimized OWL Agent execution mechanisms for better performance 🚀</li>
+    </ul>
+    <i>Try it now and experience the improved performance in your automation tasks!</i>
+  </p>
+</div>
+
 - **[2025.03.12]**: Added Bocha search in SearchToolkit, integrated Volcano Engine model platform, and enhanced Azure and OpenAI Compatible models with structured output and tool calling.
 - **[2025.03.11]**: We added MCPToolkit, FileWriteToolkit, and TerminalToolkit to enhance OWL agents with MCP tool calling, file writing capabilities, and terminal command execution.
 - **[2025.03.09]**: We added a web-based user interface that makes it easier to interact with the system.
@@ -119,7 +128,7 @@ https://private-user-images.githubusercontent.com/55657767/420212194-e813fc05-13
 
 # ✨️ Core Features
 
-- **Real-time Information Retrieval**: Leverage Wikipedia, Google Search, and other online sources for up-to-date information.
+- **Online Search**: Support for multiple search engines (including Wikipedia, Google, DuckDuckGo, Baidu, Bocha, etc.) for real-time information retrieval and knowledge acquisition.
 - **Multimodal Processing**: Support for handling internet or local videos, images, and audio data.
 - **Browser Automation**: Utilize the Playwright framework for simulating browser interactions, including scrolling, clicking, input handling, downloading, navigation, and more.
 - **Document Parsing**: Extract content from Word, Excel, PDF, and PowerPoint files, converting them into text or Markdown format.
@@ -224,7 +233,7 @@ OWL requires various API keys to interact with different services. The `owl/.env
 2. **Configure Your API Keys**:
    Open the `.env` file in your preferred text editor and insert your API keys in the corresponding fields.
    
-   > **Note**: For the minimal example (`run_mini.py`), you only need to configure the LLM API key (e.g., `OPENAI_API_KEY`).
+   > **Note**: For the minimal example (`examples/run_mini.py`), you only need to configure the LLM API key (e.g., `OPENAI_API_KEY`).
 
 ### Option 2: Setting Environment Variables Directly
 
@@ -251,6 +260,10 @@ Alternatively, you can set environment variables directly in your terminal:
 
 ## **Running with Docker**
 
+OWL can be easily deployed using Docker, which provides a consistent environment across different platforms.
+
+### **Setup Instructions**
+
 ```bash
 # Clone the repository
 git clone https://github.com/camel-ai/owl.git
@@ -259,57 +272,73 @@ cd owl
 # Configure environment variables
 cp owl/.env_template owl/.env
 # Edit the .env file and fill in your API keys
+```
 
+### **Deployment Options**
 
-# Option 1: Using docker-compose directly
-cd .container
+#### **Option 1: Using Pre-built Image (Recommended)**
 
+```bash
+# This option downloads a ready-to-use image from Docker Hub
+# Fastest and recommended for most users
 docker-compose up -d
 
 # Run OWL inside the container
 docker-compose exec owl bash
+cd .. && source .venv/bin/activate
+playwright install-deps
+xvfb-python examples/run.py
+```
 
-# activate the virtual environment
-cd .. && source .venv/bin/activate && cd owl
+#### **Option 2: Building Image Locally**
 
-playwright install-deps 
+```bash
+# For users who need to customize the Docker image or cannot access Docker Hub:
+# 1. Open docker-compose.yml
+# 2. Comment out the "image: mugglejinx/owl:latest" line
+# 3. Uncomment the "build:" section and its nested properties
+# 4. Then run:
+docker-compose up -d --build
 
-#run example demo script
-xvfb-python run.py
+# Run OWL inside the container
+docker-compose exec owl bash
+cd .. && source .venv/bin/activate
+playwright install-deps
+xvfb-python examples/run.py
+```
 
-# Option 2: Build and run using the provided scripts
+#### **Option 3: Using Convenience Scripts**
+
+```bash
+# Navigate to container directory
 cd .container
+
+# Make the script executable and build the Docker image
 chmod +x build_docker.sh
 ./build_docker.sh
-# Run OWL inside the container
+
+# Run OWL with your question
 ./run_in_docker.sh "your question"
+```
+
+### **MCP Desktop Commander Setup**
+
+If using MCP Desktop Commander within Docker, run:
+
+```bash
+npx -y @wonderwhy-er/desktop-commander setup --force-file-protocol
 ```
 
 For more detailed Docker usage instructions, including cross-platform support, optimized configurations, and troubleshooting, please refer to [DOCKER_README.md](.container/DOCKER_README_en.md).
 
 # 🚀 Quick Start
 
-## Try MCP (Model Context Protocol) Integration
-
-Experience the power of MCP by running our example that demonstrates multi-agent information retrieval and processing:
-
-```bash
-# Set up MCP servers (one-time setup)
-npx -y @smithery/cli install @wonderwhy-er/desktop-commander --client claude
-npx @wonderwhy-er/desktop-commander setup
-
-# Run the MCP example
-python owl/run_mcp.py
-```
-
-This example showcases how OWL agents can seamlessly interact with file systems, web automation, and information retrieval through the MCP protocol. Check out `owl/run_mcp.py` for the full implementation.
-
 ## Basic Usage
 
 After installation and setting up your environment variables, you can start using OWL right away:
 
 ```bash
-python owl/run.py
+python examples/run.py
 ```
 
 ## Running with Different Models
@@ -330,28 +359,28 @@ OWL supports various LLM backends, though capabilities may vary depending on the
 
 ```bash
 # Run with Qwen model
-python owl/run_qwen_zh.py
+python examples/run_qwen_zh.py
 
 # Run with Deepseek model
-python owl/run_deepseek_zh.py
+python examples/run_deepseek_zh.py
 
 # Run with other OpenAI-compatible models
-python owl/run_openai_compatiable_model.py
+python examples/run_openai_compatiable_model.py
 
 # Run with Azure OpenAI
-python owl/run_azure_openai.py
+python examples/run_azure_openai.py
 
 # Run with Ollama
-python owl/run_ollama.py
+python examples/run_ollama.py
 ```
 
 For a simpler version that only requires an LLM API key, you can try our minimal example:
 
 ```bash
-python owl/run_mini.py
+python examples/run_mini.py
 ```
 
-You can run OWL agent with your own task by modifying the `run.py` script:
+You can run OWL agent with your own task by modifying the `examples/run.py` script:
 
 ```python
 # Define your own task
@@ -393,7 +422,31 @@ Here are some tasks you can try with OWL:
 
 OWL's MCP integration provides a standardized way for AI models to interact with various tools and data sources:
 
-Try our comprehensive MCP example in `owl/run_mcp.py` to see these capabilities in action!
+Before using MCP, you need to install Node.js first.
+### **Install Node.js**
+### Windows
+
+Download the official installer: [Node.js](https://nodejs.org/en).
+
+Check "Add to PATH" option during installation.
+
+### Linux
+```bash
+sudo apt update
+sudo apt install nodejs npm -y
+```
+### Mac
+```bash
+brew install node
+```
+
+### **Install Playwright MCP Service**
+```bash
+npm install -g @executeautomation/playwright-mcp-server
+npx playwright install-deps
+```
+
+Try our comprehensive MCP example in `examples/run_mcp.py` to see these capabilities in action!
 
 ## Available Toolkits
 
@@ -412,6 +465,8 @@ tools = [
     SearchToolkit().search_duckduckgo,
     SearchToolkit().search_google,  # Comment out if unavailable
     SearchToolkit().search_wiki,
+    SearchToolkit().search_bocha,
+    SearchToolkit().search_baidu,
     *ExcelToolkit().get_tools(),
     *DocumentProcessingToolkit(model=models["document"]).get_tools(),
     *FileWriteToolkit(output_dir="./").get_tools(),
@@ -458,16 +513,24 @@ Selecting only necessary toolkits optimizes performance and reduces resource usa
 
 # 🌐 Web Interface
 
-OWL includes an intuitive web-based user interface that makes it easier to interact with the system. 
+<div align="center" style="background-color: #f0f7ff; padding: 15px; border-radius: 10px; border: 2px solid #1e88e5; margin: 20px 0;">
+  <h3 style="color: #1e88e5; margin: 0;">
+    🚀 Enhanced Web Interface Now Available!
+  </h3>
+  <p style="margin: 10px 0;">
+    Experience improved system stability and optimized performance with our latest update.
+    Start exploring the power of OWL through our user-friendly interface!
+  </p>
+</div>
 
 ## Starting the Web UI
 
 ```bash
 # Start the Chinese version
-python run_app_zh.py
+python owl/webapp_zh.py
 
 # Start the English version
-python run_app.py
+python owl/webapp.py
 ```
 
 ## Features
@@ -532,10 +595,8 @@ We welcome contributions from the community! Here's how you can help:
 3. Submit pull requests with your improvements
 
 **Current Issues Open for Contribution:**
-- [#1857](https://github.com/camel-ai/camel/issues/1857)
-- [#1770](https://github.com/camel-ai/camel/issues/1770)
+- [#1905](https://github.com/camel-ai/camel/issues/1905)
 - [#1712](https://github.com/camel-ai/camel/issues/1712)
-- [#1537](https://github.com/camel-ai/camel/issues/1537)
 
 
 To take on an issue, simply leave a comment stating your interest.
@@ -545,7 +606,7 @@ Join us ([*Discord*](https://discord.camel-ai.org/) or [*WeChat*](https://ghli.o
 
 Join us for further discussions!
 <!-- ![](./assets/community.png) -->
-![](./assets/community_8.jpg)
+![](./assets/community.jpeg)
 
 # ❓ FAQ
 

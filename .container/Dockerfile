@@ -1,58 +1,59 @@
 FROM python:3.10-slim
 
-# 设置环境变量
+# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=0 \
     PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple \
     PLAYWRIGHT_DOWNLOAD_HOST=https://npmmirror.com/mirrors/playwright \
     PLAYWRIGHT_BROWSERS_PATH=/root/.cache/ms-playwright \
-    DEBIAN_FRONTEND=noninteractive
+    DEBIAN_FRONTEND=noninteractive \
+    PATH="/app/.venv/bin:$PATH"
 
-# 设置工作目录
+# Set working directory
 WORKDIR /app
 
-# 安装系统依赖（合并为一个RUN命令减少层数）
+# Install system dependencies (combine into one RUN command to reduce layers)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl git ffmpeg libsm6 libxext6 xvfb xauth x11-utils \
-    gcc python3-dev \
+    build-essential python3-dev vim\
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-# 复制项目文件
-COPY owl/ ./owl/
-COPY licenses/ ./licenses/
-COPY assets/ ./assets/
-COPY README.md .
-COPY README_zh.md .
-COPY pyproject.toml .
 
-# 创建README.md文件以避免构建错误
-RUN echo "# OWL Project\n\n这是OWL项目的Docker环境。" > README.md
-# 安装uv工具
+# Install uv tool
 RUN pip install uv
 
-# 创建虚拟环境并安装依赖
+# Copy project build files
+COPY pyproject.toml .
+COPY README.md .
+# Create README.md if it doesn't exist
+RUN if [ ! -f "README.md" ]; then echo -e "# OWL Project\n\nThis is the Docker environment for the OWL project." > README.md; fi
+
+# Create virtual environment and install dependencies
 RUN uv venv .venv --python=3.10 && \
     . .venv/bin/activate && \
     uv pip install -e .
 
+# Copy project runtime files
+COPY owl/ ./owl/
+COPY licenses/ ./licenses/
+COPY assets/ ./assets/
+COPY README_zh.md .
 
-
-
-# 创建启动脚本
+# Create startup script
 RUN echo '#!/bin/bash\nxvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" python "$@"' > /usr/local/bin/xvfb-python && \
     chmod +x /usr/local/bin/xvfb-python
 
-# 创建欢迎脚本
-RUN echo '#!/bin/bash\necho "欢迎使用OWL项目Docker环境！"\necho "Welcome to OWL Project Docker environment!"\necho ""\necho "可用的脚本 | Available scripts:"\nls -1 *.py | grep -v "__" | sed "s/^/- /"\necho ""\necho "运行示例 | Run examples:"\necho "  xvfb-python run.py                     # 运行默认脚本 | Run default script"\necho "  xvfb-python run_deepseek_example.py      # 运行DeepSeek示例 | Run DeepSeek example"\necho ""\necho "或者使用自定义查询 | Or use custom query:"\necho "  xvfb-python run.py \"你的问题 | Your question\""\necho ""' > /usr/local/bin/owl-welcome && \
+# Create welcome script
+RUN echo '#!/bin/bash\necho "Welcome to the OWL Project Docker environment!"\necho "Welcome to OWL Project Docker environment!"\necho ""\necho "Available scripts:"\nls -1 *.py | grep -v "__" | sed "s/^/- /"\necho ""\necho "Run examples:"\necho "  xvfb-python run.py                     # Run default script"\necho "  xvfb-python run_deepseek_example.py      # Run DeepSeek example"\necho ""\necho "Or use custom query:"\necho "  xvfb-python run.py \"Your question\""\necho ""' > /usr/local/bin/owl-welcome && \
     chmod +x /usr/local/bin/owl-welcome
 
-# 设置工作目录
+# Set working directory
 WORKDIR /app/owl
 
-# 添加健康检查
+# Add health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import sys; sys.exit(0 if __import__('os').path.exists('/app/owl') else 1)"
 
-# 容器启动命令
+# Container startup command
 CMD ["/bin/bash", "-c", "owl-welcome && /bin/bash"]

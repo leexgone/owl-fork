@@ -32,12 +32,16 @@ from camel.toolkits import (
 from camel.types import ModelPlatformType, ModelType
 from camel.configs import ChatGPTConfig
 
-from utils import GAIABenchmark
+from owl.utils import GAIABenchmark
 from camel.logger import set_log_level
 
-set_log_level(level="DEBUG")
+import pathlib
 
-load_dotenv()
+base_dir = pathlib.Path(__file__).parent.parent
+env_path = base_dir / "owl" / ".env"
+load_dotenv(dotenv_path=str(env_path))
+
+set_log_level(level="DEBUG")
 
 logger = get_logger(__name__)
 

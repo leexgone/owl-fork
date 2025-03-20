@@ -22,26 +22,8 @@ Environment Setup:
 
 2. MCP Server Setup:
 
-   2.1 MCP Desktop Commander (File System Service):
-   Prerequisites: Node.js and npm
-   ```bash
-   # Install MCP service
-   npx -y @smithery/cli install @wonderwhy-er/desktop-commander --client claude
-   npx @wonderwhy-er/desktop-commander setup
 
-   # Configure in owl/mcp_servers_config.json:
-   {
-     "desktop-commander": {
-       "command": "npx",
-       "args": [
-         "-y",
-         "@wonderwhy-er/desktop-commander"
-       ]
-     }
-   }
-   ```
-
-   2.2 MCP Playwright Service:
+   2.1 MCP Playwright Service:
    ```bash
    # Install MCP service
    npm install -g @executeautomation/playwright-mcp-server
@@ -58,7 +40,7 @@ Environment Setup:
    }
    ```
 
-   2.3 MCP Fetch Service (Optional - for better retrieval):
+   2.2 MCP Fetch Service (Optional - for better retrieval):
    ```bash
    # Install MCP service
    pip install mcp-server-fetch
@@ -102,10 +84,14 @@ from camel.types import ModelPlatformType, ModelType
 from camel.logger import set_log_level
 from camel.toolkits import MCPToolkit
 
-from utils.enhanced_role_playing import OwlRolePlaying, arun_society
+from owl.utils.enhanced_role_playing import OwlRolePlaying, arun_society
 
+import pathlib
 
-load_dotenv()
+base_dir = pathlib.Path(__file__).parent.parent
+env_path = base_dir / "owl" / ".env"
+load_dotenv(dotenv_path=str(env_path))
+
 set_log_level(level="DEBUG")
 
 
@@ -161,9 +147,9 @@ async def main():
         await mcp_toolkit.connect()
 
         question = (
-            "I'd like a academic report about Andrew Ng, including his research "
-            "direction, published papers (At least 3), institutions, etc."
-            "Then organize the report in Markdown format and save it to my desktop"
+            "I'd like a academic report about Andrew Ng, including "
+            "his research direction, published papers (At least 3),"
+            " institutions, etc. "
         )
 
         # Connect to all MCP toolkits

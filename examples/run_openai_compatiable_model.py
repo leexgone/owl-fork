@@ -12,8 +12,8 @@
 # limitations under the License.
 # ========= Copyright 2023-2024 @ CAMEL-AI.org. All Rights Reserved. =========
 import os
+
 from dotenv import load_dotenv
-from camel.configs import ChatGPTConfig
 from camel.models import ModelFactory
 from camel.toolkits import (
     CodeExecutionToolkit,
@@ -25,38 +25,66 @@ from camel.toolkits import (
 )
 from camel.types import ModelPlatformType
 
-from utils import OwlRolePlaying, run_society
-
+from owl.utils import run_society
+from camel.societies import RolePlaying
 from camel.logger import set_log_level
+
+import pathlib
+
+base_dir = pathlib.Path(__file__).parent.parent
+env_path = base_dir / "owl" / ".env"
+load_dotenv(dotenv_path=str(env_path))
 
 set_log_level(level="DEBUG")
 
-load_dotenv()
 
-
-def construct_society(question: str) -> OwlRolePlaying:
+def construct_society(question: str) -> RolePlaying:
     r"""Construct a society of agents based on the given question.
 
     Args:
         question (str): The task or question to be addressed by the society.
 
     Returns:
-        OwlRolePlaying: A configured society of agents ready to address the question.
+        RolePlaying: A configured society of agents ready to address the question.
     """
 
-    # Create models for different components using Azure OpenAI
-    base_model_config = {
-        "model_platform": ModelPlatformType.AZURE,
-        "model_type": os.getenv("AZURE_OPENAI_MODEL_TYPE"),
-        "model_config_dict": ChatGPTConfig(temperature=0.4, max_tokens=4096).as_dict(),
-    }
-
+    # Create models for different components
     models = {
-        "user": ModelFactory.create(**base_model_config),
-        "assistant": ModelFactory.create(**base_model_config),
-        "web": ModelFactory.create(**base_model_config),
-        "planning": ModelFactory.create(**base_model_config),
-        "image": ModelFactory.create(**base_model_config),
+        "user": ModelFactory.create(
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="qwen-max",
+            api_key=os.getenv("QWEN_API_KEY"),
+            url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+            model_config_dict={"temperature": 0.4, "max_tokens": 4096},
+        ),
+        "assistant": ModelFactory.create(
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="qwen-max",
+            api_key=os.getenv("QWEN_API_KEY"),
+            url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+            model_config_dict={"temperature": 0.4, "max_tokens": 4096},
+        ),
+        "web": ModelFactory.create(
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="qwen-vl-max",
+            api_key=os.getenv("QWEN_API_KEY"),
+            url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+            model_config_dict={"temperature": 0.4, "max_tokens": 4096},
+        ),
+        "planning": ModelFactory.create(
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="qwen-max",
+            api_key=os.getenv("QWEN_API_KEY"),
+            url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+            model_config_dict={"temperature": 0.4, "max_tokens": 4096},
+        ),
+        "image": ModelFactory.create(
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="qwen-vl-max",
+            api_key=os.getenv("QWEN_API_KEY"),
+            url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+            model_config_dict={"temperature": 0.4, "max_tokens": 4096},
+        ),
     }
 
     # Configure toolkits
@@ -86,7 +114,7 @@ def construct_society(question: str) -> OwlRolePlaying:
     }
 
     # Create and return the society
-    society = OwlRolePlaying(
+    society = RolePlaying(
         **task_kwargs,
         user_role_name="user",
         user_agent_kwargs=user_agent_kwargs,
@@ -98,8 +126,8 @@ def construct_society(question: str) -> OwlRolePlaying:
 
 
 def main():
-    r"""Main function to run the OWL system with Azure OpenAI."""
-    # Example question
+    r"""Main function to run the OWL system with an example question."""
+    # Example research question
     question = "Navigate to Amazon.com and identify one product that is attractive to coders. Please provide me with the product name and price. No need to verify your answer."
 
     # Construct and run the society

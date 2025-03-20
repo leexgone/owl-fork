@@ -8,6 +8,10 @@ CLEAN_CACHE=0
 REBUILD=0
 SERVICE=""
 
+# 设置Docker BuildKit环境变量 | Set Docker BuildKit environment variables
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
 # 解析命令行参数 | Parse command line arguments
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -64,10 +68,6 @@ if [ ! -f "$COMPOSE_FILE" ]; then
     echo "请确保在正确的目录中运行此脚本 | Please make sure you are running this script in the correct directory"
     exit 1
 fi
-
-# 设置Docker BuildKit环境变量 | Set Docker BuildKit environment variables
-export DOCKER_BUILDKIT=1
-export COMPOSE_DOCKER_CLI_BUILD=1
 
 echo "启用Docker BuildKit加速构建... | Enabling Docker BuildKit to accelerate build..."
 

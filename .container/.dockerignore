@@ -35,7 +35,7 @@ var/
 .coverage
 htmlcov/
 
-# 虚拟环境
+# Virtual environments
 venv/
 ENV/
 env/
@@ -48,18 +48,18 @@ env/
 *.swo
 .DS_Store
 
-# 临时文件
+# Temporary files
 temp_*
 *.tmp
 *.log
 *.bak
 
-# 缓存
+# Cache
 .cache/
 .npm/
 .yarn/
 
-# 大型数据文件
+# Large data files
 *.csv
 *.sqlite
 *.db
@@ -70,5 +70,5 @@ temp_*
 *.pkl
 *.pickle
 
-# 数据目录
+# Data directory
 data/ 
