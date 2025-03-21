@@ -56,35 +56,35 @@ def construct_society(question: str) -> RolePlaying:
             model_type="qwen-max",
             api_key=os.getenv("QWEN_API_KEY"),
             url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-            model_config_dict={"temperature": 0.4, "max_tokens": 4096},
+            model_config_dict={"temperature": 0.4, "max_tokens": 128000},
         ),
         "assistant": ModelFactory.create(
             model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
             model_type="qwen-max",
             api_key=os.getenv("QWEN_API_KEY"),
             url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-            model_config_dict={"temperature": 0.4, "max_tokens": 4096},
+            model_config_dict={"temperature": 0.4, "max_tokens": 128000},
         ),
         "browsing": ModelFactory.create(
             model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
             model_type="qwen-vl-max",
             api_key=os.getenv("QWEN_API_KEY"),
             url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-            model_config_dict={"temperature": 0.4, "max_tokens": 4096},
+            model_config_dict={"temperature": 0.4, "max_tokens": 128000},
         ),
         "planning": ModelFactory.create(
             model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
             model_type="qwen-max",
             api_key=os.getenv("QWEN_API_KEY"),
             url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-            model_config_dict={"temperature": 0.4, "max_tokens": 4096},
+            model_config_dict={"temperature": 0.4, "max_tokens": 128000},
         ),
         "image": ModelFactory.create(
             model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
             model_type="qwen-vl-max",
             api_key=os.getenv("QWEN_API_KEY"),
             url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-            model_config_dict={"temperature": 0.4, "max_tokens": 4096},
+            model_config_dict={"temperature": 0.4, "max_tokens": 128000},
         ),
     }
 
@@ -92,7 +92,7 @@ def construct_society(question: str) -> RolePlaying:
     tools = [
         *BrowserToolkit(
             headless=False,  # Set to True for headless mode (e.g., on remote servers)
-            web_agent_model=models["web"],
+            web_agent_model=models["browsing"],
             planning_agent_model=models["planning"],
         ).get_tools(),
         *CodeExecutionToolkit(sandbox="subprocess", verbose=True).get_tools(),

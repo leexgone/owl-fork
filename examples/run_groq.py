@@ -102,7 +102,7 @@ def construct_society(question: str) -> OwlRolePlaying:
     tools = [
         *BrowserToolkit(
             headless=False,  # Set to True for headless mode (e.g., on remote servers)
-            web_agent_model=models["web"],
+            web_agent_model=models["browsing"],
             planning_agent_model=models["planning"],
         ).get_tools(),
         *VideoAnalysisToolkit(model=models["video"]).get_tools(),

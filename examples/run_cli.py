@@ -141,7 +141,7 @@ def construct_society() -> RolePlaying:
     tools = [
         *BrowserToolkit(
             headless=False,
-            web_agent_model=models["web"],
+            web_agent_model=models["browsing"],
             planning_agent_model=models["planning"],
         ).get_tools(),
         *VideoAnalysisToolkit(model=models["video"]).get_tools(),
