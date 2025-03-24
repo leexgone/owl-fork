@@ -113,6 +113,9 @@
   </p>
 </div>
 
+- **[2025.03.21]**: 集成OpenRouter模型平台，修复Gemini工具调用的bug
+- **[2025.03.20]**: 在MCP工具包中添加Accept头部，支持自动安装playwright
+- **[2025.03.16]**: 支持必应搜索、百度搜索
 - **[2025.03.12]**: 在SearchToolkit中添加了Bocha搜索功能，集成了火山引擎模型平台，并更新了Azure和OpenAI Compatible模型的结构化输出和工具调用能力。
 - **[2025.03.11]**: 我们添加了 MCPToolkit、FileWriteToolkit 和 TerminalToolkit，增强了 OWL Agent 的 MCP（模型上下文协议）集成、文件写入能力和终端命令执行功能。MCP 作为一个通用协议层，标准化了 AI 模型与各种数据源和工具的交互方式。
 - **[2025.03.09]**: 我们添加了基于网页的用户界面，使系统交互变得更加简便。
@@ -364,7 +367,7 @@ python examples/run_qwen_zh.py
 python examples/run_deepseek_zh.py
 
 # 使用其他 OpenAI 兼容模型运行
-python examples/run_openai_compatiable_model.py
+python examples/run_openai_compatible_model.py
 
 # 使用 Azure OpenAI模型运行
 python examples/run_azure_openai.py
@@ -582,8 +585,10 @@ python examples/run_gaia_roleplaying.py
 3. 提交包含您改进的拉取请求
 
 **当前开放贡献的问题：**
-- [#1905](https://github.com/camel-ai/camel/issues/1905)
-- [#1712](https://github.com/camel-ai/camel/issues/1712)
+- [#362](https://github.com/camel-ai/owl/issues/362)
+- [#1945](https://github.com/camel-ai/camel/issues/1945)
+- [#1925](https://github.com/camel-ai/camel/issues/1925)
+- [#1915](https://github.com/camel-ai/camel/issues/1915)
 
 要认领一个问题，只需在该问题下留言表明您的兴趣即可。
 
@@ -592,7 +597,7 @@ python examples/run_gaia_roleplaying.py
 
 加入我们，参与更多讨论！
 
-![](./assets/community.jpeg)
+![](./assets/community.jpg)
 
 # ❓ 常见问题
 
