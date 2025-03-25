@@ -3,7 +3,7 @@ import sys
 
 from dotenv import load_dotenv
 
-from camel import logger
+from camel.logger import set_log_level, get_logger
 from camel.models import ModelFactory
 from camel.types import ModelPlatformType, ModelType
 from camel.toolkits import ExcelToolkit, SearchToolkit, FileWriteToolkit, CodeExecutionToolkit
@@ -16,11 +16,17 @@ sys.path.insert(0, str(project_root))
 from owl.utils import OwlRolePlaying, run_society
 # from owl.utils import OwlRolePlaying
 
-def construct_society(question: str) -> OwlRolePlaying:
-    model_type = os.getenv("DEEPSEEK_API_MODEL_TYPE", ModelType.DEEPSEEK_CHAT)
+logger = get_logger(__name__)
+
+def construct_society(question: str, model: str = "DEEPSEEK") -> OwlRolePlaying:
+    model_platform = ModelPlatformType.DEEPSEEK if model == "DEEPSEEK" else ModelPlatformType.QWEN
+    model_type = os.getenv("DEEPSEEK_API_MODEL_TYPE", ModelType.DEEPSEEK_CHAT) if model == "DEEPSEEK" else os.getenv("QWEN_API_MODEL_TYPE", ModelType.QWEN_QWQ_32B)
+
+    logger.debug(f'create model: {model_platform} - {model_type}')
+
     models = {
         "user": ModelFactory.create(
-            model_platform = ModelPlatformType.DEEPSEEK,
+            model_platform = model_platform,
             model_type = model_type,
             model_config_dict = {
                 "temperature": 0,
@@ -28,7 +34,7 @@ def construct_society(question: str) -> OwlRolePlaying:
             },
         ),
         "assistant": ModelFactory.create(
-            model_platform = ModelPlatformType.DEEPSEEK,
+            model_platform = model_platform,
             model_type = model_type,
             model_config_dict = {
                 "temperature": 0,
@@ -66,10 +72,10 @@ def construct_society(question: str) -> OwlRolePlaying:
 
 def main():
     load_dotenv()
-    logger.set_log_level(level=os.getenv("CAMEL_LOGGING_LEVEL", "INFO"))
+    set_log_level(level=os.getenv("CAMEL_LOGGING_LEVEL", "INFO"))
     
     question = sys.argv[1] if len(sys.argv) > 1 else "搜索DeepSeek最近的相关新闻，整理成一份分析报告，所有资料保存到本地存储"
-    society = construct_society(question)
+    society = construct_society(question, "QWQ")
     anwser, chat_history, token_count = run_society(society)
     print(f"Answer: {anwser}")
 
