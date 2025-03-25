@@ -40,9 +40,9 @@ def construct_society(question: str) -> OwlRolePlaying:
     tools = [
         *CodeExecutionToolkit(sandbox="subprocess", verbose=True).get_tools(),
         SearchToolkit().search_bing,
-        SearchToolkit().search_duckduckgo,
-        SearchToolkit().search_wiki,
         SearchToolkit().search_baidu,
+        # SearchToolkit().search_duckduckgo,
+        # SearchToolkit().search_wiki,
         *ExcelToolkit().get_tools(),
         *FileWriteToolkit(output_dir="E:/Test/").get_tools(),
     ]
