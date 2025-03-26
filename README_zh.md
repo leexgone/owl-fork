@@ -126,6 +126,7 @@
   </p>
 </div>
 
+- **[2025.03.26]**: 支持Gemini 2.5 Pro模型，添加示例运行代码
 - **[2025.03.21]**: 集成OpenRouter模型平台，修复Gemini工具调用的bug
 - **[2025.03.20]**: 在MCP工具包中添加Accept头部，支持自动安装playwright
 - **[2025.03.16]**: 支持必应搜索、百度搜索
@@ -378,6 +379,9 @@ python examples/run_qwen_zh.py
 
 # 使用 Deepseek 模型运行
 python examples/run_deepseek_zh.py
+
+# 使用 Gemini 模型运行
+python examples/run_gemini.py
 
 # 使用其他 OpenAI 兼容模型运行
 python examples/run_openai_compatible_model.py
