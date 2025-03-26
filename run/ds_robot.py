@@ -22,6 +22,8 @@ def construct_society(question: str, model: str = "DEEPSEEK") -> OwlRolePlaying:
     model_platform = ModelPlatformType.DEEPSEEK if model == "DEEPSEEK" else ModelPlatformType.QWEN
     model_type = os.getenv("DEEPSEEK_API_MODEL_TYPE", ModelType.DEEPSEEK_CHAT) if model == "DEEPSEEK" else os.getenv("QWEN_API_MODEL_TYPE", ModelType.QWEN_QWQ_32B)
 
+    max_tokens = os.getenv("LLM_MAX_TOKENS", 10000)
+
     logger.debug(f'create model: {model_platform} - {model_type}')
 
     models = {
@@ -30,7 +32,7 @@ def construct_society(question: str, model: str = "DEEPSEEK") -> OwlRolePlaying:
             model_type = model_type,
             model_config_dict = {
                 "temperature": 0,
-                "max_tokens": 10000,
+                "max_tokens": max_tokens,
             },
         ),
         "assistant": ModelFactory.create(
@@ -38,7 +40,7 @@ def construct_society(question: str, model: str = "DEEPSEEK") -> OwlRolePlaying:
             model_type = model_type,
             model_config_dict = {
                 "temperature": 0,
-                "max_tokens": 10000
+                "max_tokens": max_tokens,
             },
         ),
     }
