@@ -16,17 +16,21 @@
 # You can obtain your API key from Bailian platform: bailian.console.aliyun.com
 # Set it as QWEN_API_KEY="your-api-key" in your .env file or add it to your environment variables
 
-from dotenv import load_dotenv
 import sys
+from dotenv import load_dotenv
 from camel.models import ModelFactory
-from camel.toolkits import BrowserToolkit, SearchToolkit, FileWriteToolkit
+from camel.toolkits import (
+    SearchToolkit,
+    BrowserToolkit,
+    FileWriteToolkit,
+)
 from camel.types import ModelPlatformType, ModelType
+from camel.societies import RolePlaying
 
 from owl.utils import run_society
 
-from camel.societies import RolePlaying
-
 from camel.logger import set_log_level
+
 
 import pathlib
 
@@ -38,61 +42,83 @@ set_log_level(level="DEBUG")
 
 
 def construct_society(question: str) -> RolePlaying:
-    r"""Construct the society based on the question."""
+    """
+    Construct a society of agents based on the given question.
 
-    user_role_name = "user"
-    assistant_role_name = "assistant"
+    Args:
+        question (str): The task or question to be addressed by the society.
 
-    user_model = ModelFactory.create(
-        model_platform=ModelPlatformType.QWEN,
-        model_type=ModelType.QWEN_MAX,
-        model_config_dict={"temperature": 0},
-    )
+    Returns:
+        RolePlaying: A configured society of agents ready to address the question.
+    """
 
-    assistant_model = ModelFactory.create(
-        model_platform=ModelPlatformType.QWEN,
-        model_type=ModelType.QWEN_MAX,
-        model_config_dict={"temperature": 0},
-    )
+    # Create models for different components
+    models = {
+        "user": ModelFactory.create(
+            model_platform=ModelPlatformType.QWEN,
+            model_type=ModelType.QWEN_MAX,
+            model_config_dict={"temperature": 0},
+        ),
+        "assistant": ModelFactory.create(
+            model_platform=ModelPlatformType.QWEN,
+            model_type=ModelType.QWEN_MAX,
+            model_config_dict={"temperature": 0},
+        ),
+        "browsing": ModelFactory.create(
+            model_platform=ModelPlatformType.QWEN,
+            model_type=ModelType.QWEN_VL_MAX,
+            model_config_dict={"temperature": 0},
+        ),
+        "planning": ModelFactory.create(
+            model_platform=ModelPlatformType.QWEN,
+            model_type=ModelType.QWEN_MAX,
+            model_config_dict={"temperature": 0},
+        ),
+        "video": ModelFactory.create(
+            model_platform=ModelPlatformType.QWEN,
+            model_type=ModelType.QWEN_VL_MAX,
+            model_config_dict={"temperature": 0},
+        ),
+        "image": ModelFactory.create(
+            model_platform=ModelPlatformType.QWEN,
+            model_type=ModelType.QWEN_VL_MAX,
+            model_config_dict={"temperature": 0},
+        ),
+        "document": ModelFactory.create(
+            model_platform=ModelPlatformType.QWEN,
+            model_type=ModelType.QWEN_VL_MAX,
+            model_config_dict={"temperature": 0},
+        ),
+    }
 
-    planning_model = ModelFactory.create(
-        model_platform=ModelPlatformType.QWEN,
-        model_type=ModelType.QWEN_MAX,
-        model_config_dict={"temperature": 0},
-    )
-
-    web_model = ModelFactory.create(
-        model_platform=ModelPlatformType.QWEN,
-        model_type=ModelType.QWEN_VL_MAX,
-        model_config_dict={"temperature": 0},
-    )
-
-    tools_list = [
+    # Configure toolkits
+    tools = [
         *BrowserToolkit(
-            headless=False,
-            web_agent_model=web_model,
-            planning_agent_model=planning_model,
+            headless=False,  # Set to True for headless mode (e.g., on remote servers)
+            web_agent_model=models["browsing"],
+            planning_agent_model=models["planning"],
             output_language="Chinese",
         ).get_tools(),
         SearchToolkit().search_baidu,
         *FileWriteToolkit(output_dir="./").get_tools(),
     ]
 
-    user_role_name = "user"
-    user_agent_kwargs = dict(model=user_model)
-    assistant_role_name = "assistant"
-    assistant_agent_kwargs = dict(model=assistant_model, tools=tools_list)
+    # Configure agent roles and parameters
+    user_agent_kwargs = {"model": models["user"]}
+    assistant_agent_kwargs = {"model": models["assistant"], "tools": tools}
 
+    # Configure task parameters
     task_kwargs = {
         "task_prompt": question,
         "with_task_specify": False,
     }
 
+    # Create and return the society
     society = RolePlaying(
         **task_kwargs,
-        user_role_name=user_role_name,
+        user_role_name="user",
         user_agent_kwargs=user_agent_kwargs,
-        assistant_role_name=assistant_role_name,
+        assistant_role_name="assistant",
         assistant_agent_kwargs=assistant_agent_kwargs,
         output_language="Chinese",
     )
@@ -100,15 +126,21 @@ def construct_society(question: str) -> RolePlaying:
     return society
 
 
-# Example case
-default_task = "浏览亚马逊并找出一款对程序员有吸引力的产品。请提供产品名称和价格"
+def main():
+    r"""Main function to run the OWL system with an example question."""
+    # Example research question
+    default_task = "浏览亚马逊并找出一款对程序员有吸引力的产品。请提供产品名称和价格"
 
-# Override default task if command line argument is provided
-task = sys.argv[1] if len(sys.argv) > 1 else default_task
+    # Override default task if command line argument is provided
+    task = sys.argv[1] if len(sys.argv) > 1 else default_task
 
-# Construct and run the society
-society = construct_society(task)
+    # Construct and run the society
+    society = construct_society(task)
+    answer, chat_history, token_count = run_society(society)
 
-answer, chat_history, token_count = run_society(society)
+    # Output the result
+    print(f"\033[94mAnswer: {answer}\033[0m")
 
-print(f"\033[94mAnswer: {answer}\033[0m")
+
+if __name__ == "__main__":
+    main()

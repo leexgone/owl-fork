@@ -126,10 +126,12 @@
   </p>
 </div>
 
-- **[2025.03.26]**: 支持Gemini 2.5 Pro模型，添加示例运行代码
-- **[2025.03.21]**: 集成OpenRouter模型平台，修复Gemini工具调用的bug
-- **[2025.03.20]**: 在MCP工具包中添加Accept头部，支持自动安装playwright
-- **[2025.03.16]**: 支持必应搜索、百度搜索
+- **[2025.03.27]**: 集成SearxNGToolkit，使用SearxNG搜索引擎执行网络搜索。
+- **[2025.03.26]**: 增强Browser Toolkit，支持"chrome"、"msedge"和"chromium"多种浏览器通道。
+- **[2025.03.25]**: 支持Gemini 2.5 Pro模型，添加示例运行代码。
+- **[2025.03.21]**: 集成OpenRouter模型平台，修复Gemini工具调用的bug。
+- **[2025.03.20]**: 在MCP工具包中添加Accept header，支持自动安装playwright。
+- **[2025.03.16]**: 支持必应搜索、百度搜索。
 - **[2025.03.12]**: 在SearchToolkit中添加了Bocha搜索功能，集成了火山引擎模型平台，并更新了Azure和OpenAI Compatible模型的结构化输出和工具调用能力。
 - **[2025.03.11]**: 我们添加了 MCPToolkit、FileWriteToolkit 和 TerminalToolkit，增强了 OWL Agent 的 MCP（模型上下文协议）集成、文件写入能力和终端命令执行功能。MCP 作为一个通用协议层，标准化了 AI 模型与各种数据源和工具的交互方式。
 - **[2025.03.09]**: 我们添加了基于网页的用户界面，使系统交互变得更加简便。
@@ -141,6 +143,8 @@
 https://private-user-images.githubusercontent.com/55657767/420211368-f29f477d-7eef-46da-8d7a-8f3bcf506da2.mp4
 
 https://private-user-images.githubusercontent.com/55657767/420212194-e813fc05-136a-485f-8df3-f10d9b4e63ec.mp4
+
+此视频演示了如何在本地安装 OWL，展示了它作为一个前沿的多智能体协作框架，推动任务自动化边界的能力：https://www.youtube.com/watch?v=8XlqVyAZOr8
 
 # ✨️ 核心功能
 
@@ -291,10 +295,10 @@ cp owl/.env_template owl/.env
 ```bash
 # 此选项从Docker Hub下载一个即用型镜像
 # 最快速且推荐给大多数用户
-docker-compose up -d
+docker compose up -d
 
 # 在容器中运行OWL
-docker-compose exec owl bash
+docker compose exec owl bash
 cd .. && source .venv/bin/activate
 playwright install-deps
 xvfb-python examples/run.py
@@ -308,10 +312,10 @@ xvfb-python examples/run.py
 # 2. 注释掉"image: mugglejinx/owl:latest"行
 # 3. 取消注释"build:"部分及其嵌套属性
 # 4. 然后运行：
-docker-compose up -d --build
+docker compose up -d --build
 
 # 在容器中运行OWL
-docker-compose exec owl bash
+docker compose exec owl bash
 cd .. && source .venv/bin/activate
 playwright install-deps
 xvfb-python examples/run.py
@@ -539,6 +543,9 @@ python owl/webapp_zh.py
 
 # 英文版本
 python owl/webapp.py
+
+# 日文版本
+python owl/webapp_jp.py
 ```
 
 网页界面提供以下功能：
@@ -614,7 +621,7 @@ python examples/run_gaia_roleplaying.py
 
 加入我们，参与更多讨论！
 
-![](./assets/community.jpg)
+![](./assets/community.jpeg)
 
 # ❓ 常见问题
 

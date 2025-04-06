@@ -59,3 +59,10 @@ follow_imports = "skip"
 [[tool.mypy.overrides]]
 module = "utils"
 ignore_missing_imports = true
+
+[tool.codespell]
+# Ref: https://github.com/codespell-project/codespell#using-a-config-file
+skip = '.git*,*.pdf,*.lock'
+check-hidden = true
+ignore-regex = '\bBrin\b'
+ignore-words-list = 'datas'
