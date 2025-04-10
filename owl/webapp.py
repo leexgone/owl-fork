@@ -246,12 +246,14 @@ MODULE_DESCRIPTIONS = {
     "run_mini": "Using OpenAI model with minimal configuration to process tasks",
     "run_gemini": "Using Gemini model to process tasks",
     "run_deepseek_zh": "Using deepseek model to process Chinese tasks",
+    "run_mistral": "Using Mistral models to process tasks",
     "run_openai_compatible_model": "Using openai compatible model to process tasks",
     "run_ollama": "Using local ollama model to process tasks",
     "run_qwen_mini_zh": "Using qwen model with minimal configuration to process tasks",
     "run_qwen_zh": "Using qwen model to process tasks",
     "run_azure_openai": "Using azure openai model to process tasks",
     "run_groq": "Using groq model to process tasks",
+    "run_ppio": "Using ppio model to process tasks",
 }
 
 
@@ -627,6 +629,8 @@ def get_api_guide(key: str) -> str:
         return "https://help.aliyun.com/zh/model-studio/developer-reference/get-api-key"
     elif "deepseek" in key_lower:
         return "https://platform.deepseek.com/api_keys"
+    elif "ppio" in key_lower:
+        return "https://ppinfra.com/settings/key-management?utm_source=github_owl"
     elif "google" in key_lower:
         return "https://coda.io/@jon-dallas/google-image-search-pack-example/search-engine-id-and-google-api-key-3"
     elif "search_engine_id" in key_lower:
