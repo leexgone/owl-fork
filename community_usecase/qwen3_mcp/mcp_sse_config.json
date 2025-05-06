@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "edgeone-pages-mcp": {
+      "type": "sse",
+      "url": "https://mcp.api-inference.modelscope.cn/sse/fcbc9ff4e9704d"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ]
+    }
+  }
+}

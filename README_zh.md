@@ -83,22 +83,6 @@
 
 # 🔥 新闻
 
-<div align="center" style="background-color: #fffacd; padding: 15px; border-radius: 10px; border: 2px solid #ffd700; margin: 20px 0;">
-  <h3 style="color: #d81b60; margin: 0; font-size: 1.3em;">
-    🌟🌟🌟 <b>OWL社区用例征集令！</b> 🌟🌟🌟
-  </h3>
-  <p style="font-size: 1.1em; margin: 10px 0;">
-    我们请社区成员贡献创新的OWL用例！<br>
-    <b>前十名提交</b>将获得特别社区礼物和认可。
-  </p>
-  <p>
-    <a href="https://github.com/camel-ai/owl/tree/main/community_usecase/COMMUNITY_CALL_FOR_USE_CASES.md" style="background-color: #d81b60; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold;">了解更多并提交</a>
-  </p>
-  <p style="margin: 5px 0;">
-    提交截止日期：<b>2025年3月31日</b>
-  </p>
-</div>
-
 <div align="center" style="background-color: #e8f5e9; padding: 15px; border-radius: 10px; border: 2px solid #4caf50; margin: 20px 0;">
   <h3 style="color: #2e7d32; margin: 0; font-size: 1.3em;">
     🧩 <b>新增：社区智能体挑战！</b> 🧩
@@ -378,6 +362,9 @@ python examples/run_mini.py
 OWL 支持多种 LLM 后端，但功能可能因模型的工具调用和多模态能力而异。您可以使用以下脚本来运行不同的模型：
 
 ```bash
+# 使用 Claude 模型运行
+python examples/run_claude.py
+
 # 使用 Qwen 模型运行
 python examples/run_qwen_zh.py
 
@@ -611,10 +598,13 @@ python examples/run_gaia_roleplaying.py
 3. 提交包含您改进的拉取请求
 
 **当前开放贡献的问题：**
-- [#362](https://github.com/camel-ai/owl/issues/362)
-- [#1945](https://github.com/camel-ai/camel/issues/1945)
-- [#1925](https://github.com/camel-ai/camel/issues/1925)
 - [#1915](https://github.com/camel-ai/camel/issues/1915)
+- [#2190](https://github.com/camel-ai/camel/issues/2190)
+- [#2165](https://github.com/camel-ai/camel/issues/2165)
+- [#2121](https://github.com/camel-ai/camel/issues/2121)
+- [#1908](https://github.com/camel-ai/camel/issues/1908)
+- [#1538](https://github.com/camel-ai/camel/issues/1538)
+- [#1481](https://github.com/camel-ai/camel/issues/1481)
 
 要认领一个问题，只需在该问题下留言表明您的兴趣即可。
 

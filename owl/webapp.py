@@ -245,6 +245,7 @@ MODULE_DESCRIPTIONS = {
     "run": "Default mode: Using OpenAI model's default agent collaboration mode, suitable for most tasks.",
     "run_mini": "Using OpenAI model with minimal configuration to process tasks",
     "run_gemini": "Using Gemini model to process tasks",
+    "run_claude": "Using Claude model to process tasks",
     "run_deepseek_zh": "Using deepseek model to process Chinese tasks",
     "run_mistral": "Using Mistral models to process tasks",
     "run_openai_compatible_model": "Using openai compatible model to process tasks",
@@ -254,6 +255,8 @@ MODULE_DESCRIPTIONS = {
     "run_azure_openai": "Using azure openai model to process tasks",
     "run_groq": "Using groq model to process tasks",
     "run_ppio": "Using ppio model to process tasks",
+    "run_together_ai": "Using together ai model to process tasks",
+    "run_novita_ai": "Using novita ai model to process tasks",
 }
 
 
@@ -639,6 +642,8 @@ def get_api_guide(key: str) -> str:
         return "https://chunkr.ai/"
     elif "firecrawl" in key_lower:
         return "https://www.firecrawl.dev/"
+    elif "novita" in key_lower:
+        return "https://novita.ai/settings/key-management?utm_source=github_owl&utm_medium=github_readme&utm_campaign=github_link"
     else:
         return ""
 
@@ -1088,7 +1093,7 @@ def create_ui():
                     label="Question",
                     elem_id="question_input",
                     show_copy_button=True,
-                    value="Open Google search, summarize the github stars, fork counts, etc. of camel-ai's camel framework, and write the numbers into a python file using the plot package, save it locally, and run the generated python file.",
+                    value="Open Brave search, summarize the github stars, fork counts, etc. of camel-ai's camel framework, and write the numbers into a python file using the plot package, save it locally, and run the generated python file. Note: You have been provided with the necessary tools to complete this task.",
                 )
 
                 # Enhanced module selection dropdown
@@ -1123,7 +1128,7 @@ def create_ui():
 
                 # Example questions
                 examples = [
-                    "Open Google search, summarize the github stars, fork counts, etc. of camel-ai's camel framework, and write the numbers into a python file using the plot package, save it locally, and run the generated python file.",
+                    "Open Brave search, summarize the github stars, fork counts, etc. of camel-ai's camel framework, and write the numbers into a python file using the plot package, save it locally, and run the generated python file. Note: You have been provided with the necessary tools to complete this task.",
                     "Browse Amazon and find a product that is attractive to programmers. Please provide the product name and price",
                     "Write a hello world python file and save it locally",
                 ]
@@ -1142,7 +1147,7 @@ def create_ui():
             with gr.Tabs():  # Set conversation record as the default selected tab
                 with gr.TabItem("Conversation Record"):
                     # Add conversation record display area
-                    with gr.Box():
+                    with gr.Group():
                         log_display2 = gr.Markdown(
                             value="No conversation records yet.",
                             elem_classes="log-display",
@@ -1158,7 +1163,7 @@ def create_ui():
                         )
 
                 with gr.TabItem("Environment Variable Management", id="env-settings"):
-                    with gr.Box(elem_classes="env-manager-container"):
+                    with gr.Group(elem_classes="env-manager-container"):
                         gr.Markdown("""
                             ## Environment Variable Management
                             
@@ -1169,7 +1174,7 @@ def create_ui():
                         with gr.Row():
                             # Left column: Environment variable management controls
                             with gr.Column(scale=3):
-                                with gr.Box(elem_classes="env-controls"):
+                                with gr.Group(elem_classes="env-controls"):
                                     # Environment variable table - set to interactive for direct editing
                                     gr.Markdown("""
                                     <div style="background-color: #e7f3fe; border-left: 6px solid #2196F3; padding: 10px; margin: 15px 0; border-radius: 4px;">
@@ -1299,7 +1304,12 @@ def main():
         app = create_ui()
 
         app.queue()
-        app.launch(share=False, favicon_path="../assets/owl-favicon.ico")
+        app.launch(
+            share=False,
+            favicon_path=os.path.join(
+                os.path.dirname(__file__), "assets", "owl-favicon.ico"
+            ),
+        )
     except Exception as e:
         logging.error(f"Error occurred while starting the application: {str(e)}")
         print(f"Error occurred while starting the application: {str(e)}")

@@ -81,22 +81,6 @@
 # 🔥 ニュース
 
 
-<div align="center" style="background-color: #fffacd; padding: 15px; border-radius: 10px; border: 2px solid #ffd700; margin: 20px 0;">
-  <h3 style="color: #d81b60; margin: 0; font-size: 1.3em;">
-    🌟🌟🌟 <b>コミュニティ用ケースの募集！</b> 🌟🌟🌟
-  </h3>
-  <p style="font-size: 1.1em; margin: 10px 0;">
-    コミュニティにOWLの革新的なユースケースを提供してもらうための招待です！ <br>
-    <b>トップ10の提出物</b>には特別なコミュニティギフトと認識が与えられます。
-  </p>
-  <p>
-    <a href="https://github.com/camel-ai/owl/tree/main/community_usecase/COMMUNITY_CALL_FOR_USE_CASES.md" style="background-color: #d81b60; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold;">詳細と提出</a>
-  </p>
-  <p style="margin: 5px 0;">
-    提出期限：<b>2025年3月31日</b>
-  </p>
-</div>
-
 <div align="center" style="background-color: #e8f5e9; padding: 15px; border-radius: 10px; border: 2px solid #4caf50; margin: 20px 0;">
   <h3 style="color: #2e7d32; margin: 0; font-size: 1.3em;">
     🧩 <b>新機能：コミュニティエージェントチャレンジ！</b> 🧩
@@ -611,10 +595,13 @@ OWLのGAIAベンチマークスコア58.18を再現するには：
 3. 改善点を含むプルリクエストを提出する
 
 **現在貢献を受け付けている問題：**
-- [#362](https://github.com/camel-ai/owl/issues/362)
-- [#1945](https://github.com/camel-ai/camel/issues/1945)
-- [#1925](https://github.com/camel-ai/camel/issues/1925)
 - [#1915](https://github.com/camel-ai/camel/issues/1915)
+- [#2190](https://github.com/camel-ai/camel/issues/2190)
+- [#2165](https://github.com/camel-ai/camel/issues/2165)
+- [#2121](https://github.com/camel-ai/camel/issues/2121)
+- [#1908](https://github.com/camel-ai/camel/issues/1908)
+- [#1538](https://github.com/camel-ai/camel/issues/1538)
+- [#1481](https://github.com/camel-ai/camel/issues/1481)
 
 
 問題を引き受けるには、興味を示すコメントを残すだけです。

@@ -29,6 +29,7 @@
 [Installation](#️-installation) |
 [Examples](https://github.com/camel-ai/owl/tree/main/owl) |
 [Paper](https://arxiv.org/abs/2303.17760) |
+[Technical Report](https://hypnotic-mind-6bd.notion.site/OWL-Optimized-Workforce-Learning-for-General-Multi-Agent-Assistance-in-Real-World-Task-Automation-1d4004aeb21380158749c7f84b20643f) |
 [Citation](https://github.com/camel-ai/owl#citation) |
 [Contributing](https://github.com/camel-ai/owl/graphs/contributors) |
 [CAMEL-AI](https://www.camel-ai.org/)
@@ -37,7 +38,7 @@
 
 <div align="center" style="background-color: #f0f7ff; padding: 10px; border-radius: 5px; margin: 15px 0;">
   <h3 style="color: #1e88e5; margin: 0;">
-    🏆 OWL achieves <span style="color: #d81b60; font-weight: bold; font-size: 1.2em;">58.18</span> average score on GAIA benchmark and ranks <span style="color: #d81b60; font-weight: bold; font-size: 1.2em;">🏅️ #1</span> among open-source frameworks! 🏆
+    🏆 OWL achieves <span style="color: #d81b60; font-weight: bold; font-size: 1.2em;">69.09</span> average score on GAIA benchmark and ranks <span style="color: #d81b60; font-weight: bold; font-size: 1.2em;">🏅️ #1</span> among open-source frameworks! 🏆
   </h3>
 </div>
 
@@ -83,22 +84,6 @@ Our vision is to revolutionize how AI agents collaborate to solve real-world tas
 # 🔥 News
 
 
-<div align="center" style="background-color: #fffacd; padding: 15px; border-radius: 10px; border: 2px solid #ffd700; margin: 20px 0;">
-  <h3 style="color: #d81b60; margin: 0; font-size: 1.3em;">
-    🌟🌟🌟 <b>COMMUNITY CALL FOR USE CASES!</b> 🌟🌟🌟
-  </h3>
-  <p style="font-size: 1.1em; margin: 10px 0;">
-    We're inviting the community to contribute innovative use cases for OWL! <br>
-    The <b>top ten submissions</b> will receive special community gifts and recognition.
-  </p>
-  <p>
-    <a href="https://github.com/camel-ai/owl/tree/main/community_usecase/COMMUNITY_CALL_FOR_USE_CASES.md" style="background-color: #d81b60; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold;">Learn More & Submit</a>
-  </p>
-  <p style="margin: 5px 0;">
-    Submission deadline: <b>March 31, 2025</b>
-  </p>
-</div>
-
 <div align="center" style="background-color: #e8f5e9; padding: 15px; border-radius: 10px; border: 2px solid #4caf50; margin: 20px 0;">
   <h3 style="color: #2e7d32; margin: 0; font-size: 1.3em;">
     🧩 <b>NEW: COMMUNITY AGENT CHALLENGES!</b> 🧩
@@ -126,6 +111,7 @@ Our vision is to revolutionize how AI agents collaborate to solve real-world tas
   </p>
 </div>
 
+- **[2025.04.18]**: We uploaded OWL's new GAIA benchmark score of **69.09%**, ranking #1 among open-source frameworks. Check the technical report [here](https://hypnotic-mind-6bd.notion.site/OWL-Optimized-Workforce-Learning-for-General-Multi-Agent-Assistance-in-Real-World-Task-Automation-1d4004aeb21380158749c7f84b20643f).
 - **[2025.03.27]**: Integrate SearxNGToolkit performing web searches using SearxNG search engine.
 - **[2025.03.26]**: Enhanced Browser Toolkit with multi-browser support for "chrome", "msedge", and "chromium" channels.
 - **[2025.03.25]**: Supported Gemini 2.5 Pro, added example run code
@@ -384,6 +370,9 @@ For information on configuring AI models, please refer to our [CAMEL models docu
 OWL supports various LLM backends, though capabilities may vary depending on the model's tool calling and multimodal abilities. You can use the following scripts to run with different models:
 
 ```bash
+# Run with Claude model
+python examples/run_claude.py
+
 # Run with Qwen model
 python examples/run_qwen_zh.py
 
@@ -612,11 +601,10 @@ If you find this repo useful, please cite:
 
 ```
 @misc{owl2025,
-  title        = {OWL: Optimized Workforce Learning for General Multi-Agent Assistance in Real-World Task Automation},
-  author       = {{CAMEL-AI.org}},
-  howpublished = {\url{https://github.com/camel-ai/owl}},
-  note         = {Accessed: 2025-03-07},
-  year         = {2025}
+  title={OWL: Optimized Workforce Learning for General Multi-Agent Assistance in Real-World Task Automation},
+  author={Mengkang Hu, Yuhang Zhou, Wendong Fan, Yuzhou Nie, Bowei Xia, Tao Sun, Ziyu Ye, Zhaoxuan Jin, Yingru Li, Zeyu Zhang, Yifeng Wang, Qianshuo Ye, Ping Luo, Guohao Li},
+  url={https://github.com/camel-ai/owl},
+  year={2025}
 }
 ```
 
@@ -629,11 +617,13 @@ We welcome contributions from the community! Here's how you can help:
 3. Submit pull requests with your improvements
 
 **Current Issues Open for Contribution:**
-- [#362](https://github.com/camel-ai/owl/issues/362)
-- [#1945](https://github.com/camel-ai/camel/issues/1945)
-- [#1925](https://github.com/camel-ai/camel/issues/1925)
 - [#1915](https://github.com/camel-ai/camel/issues/1915)
-- [#1970](https://github.com/camel-ai/camel/issues/1970)
+- [#2190](https://github.com/camel-ai/camel/issues/2190)
+- [#2165](https://github.com/camel-ai/camel/issues/2165)
+- [#2121](https://github.com/camel-ai/camel/issues/2121)
+- [#1908](https://github.com/camel-ai/camel/issues/1908)
+- [#1538](https://github.com/camel-ai/camel/issues/1538)
+- [#1481](https://github.com/camel-ai/camel/issues/1481)
 
 To take on an issue, simply leave a comment stating your interest.
 
