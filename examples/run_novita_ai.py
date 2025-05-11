@@ -49,32 +49,32 @@ def construct_society(question: str) -> RolePlaying:
     models = {
         "user": ModelFactory.create(
             model_platform=ModelPlatformType.NOVITA,
-            model_type=ModelType.NOVITA_LLAMA_4_MAVERICK_17B,
+            model_type=ModelType.NOVITA_LLAMA_4_SCOUT_17B,
             model_config_dict={"temperature": 0},
         ),
         "assistant": ModelFactory.create(
             model_platform=ModelPlatformType.NOVITA,
-            model_type=ModelType.NOVITA_LLAMA_4_MAVERICK_17B,
+            model_type=ModelType.NOVITA_LLAMA_4_SCOUT_17B,
             model_config_dict={"temperature": 0},
         ),
         "browsing": ModelFactory.create(
             model_platform=ModelPlatformType.NOVITA,
-            model_type=ModelType.NOVITA_LLAMA_4_MAVERICK_17B,
+            model_type=ModelType.NOVITA_LLAMA_4_SCOUT_17B,
             model_config_dict={"temperature": 0},
         ),
         "planning": ModelFactory.create(
             model_platform=ModelPlatformType.NOVITA,
-            model_type=ModelType.NOVITA_LLAMA_4_MAVERICK_17B,
+            model_type=ModelType.NOVITA_LLAMA_4_SCOUT_17B,
             model_config_dict={"temperature": 0},
         ),
         "image": ModelFactory.create(
             model_platform=ModelPlatformType.NOVITA,
-            model_type=ModelType.NOVITA_LLAMA_4_MAVERICK_17B,
+            model_type=ModelType.NOVITA_LLAMA_4_SCOUT_17B,
             model_config_dict={"temperature": 0},
         ),
         "document": ModelFactory.create(
             model_platform=ModelPlatformType.NOVITA,
-            model_type=ModelType.NOVITA_LLAMA_4_MAVERICK_17B,
+            model_type=ModelType.NOVITA_LLAMA_4_SCOUT_17B,
             model_config_dict={"temperature": 0},
         ),
     }

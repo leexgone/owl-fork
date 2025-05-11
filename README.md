@@ -67,10 +67,41 @@ Our vision is to revolutionize how AI agents collaborate to solve real-world tas
 - [🎬 Demo Video](#-demo-video)
 - [✨️ Core Features](#️-core-features)
 - [🛠️ Installation](#️-installation)
+  - [**Prerequisites**](#prerequisites)
+    - [Install Python](#install-python)
+  - [**Installation Options**](#installation-options)
+    - [Option 1: Using uv (Recommended)](#option-1-using-uv-recommended)
+    - [Option 2: Using venv and pip](#option-2-using-venv-and-pip)
+    - [Option 3: Using conda](#option-3-using-conda)
+    - [Option 4: Using Docker](#option-4-using-docker)
+      - [**Using Pre-built Image (Recommended)**](#using-pre-built-image-recommended)
+      - [**Building Image Locally**](#building-image-locally)
+      - [**Using Convenience Scripts**](#using-convenience-scripts)
+  - [**Setup Environment Variables**](#setup-environment-variables)
+    - [Setting Environment Variables Directly](#setting-environment-variables-directly)
+    - [Alternative: Using a `.env` File](#alternative-using-a-env-file)
+    - [**MCP Desktop Commander Setup**](#mcp-desktop-commander-setup)
 - [🚀 Quick Start](#-quick-start)
+  - [Basic Usage](#basic-usage)
+  - [Running with Different Models](#running-with-different-models)
+    - [Model Requirements](#model-requirements)
+      - [Supported Models](#supported-models)
+    - [Example Tasks](#example-tasks)
 - [🧰 Toolkits and Capabilities](#-toolkits-and-capabilities)
   - [Model Context Protocol (MCP)](#model-context-protocol-mcp)
+    - [**Install Node.js**](#install-nodejs)
+    - [Windows](#windows)
+    - [Linux](#linux)
+    - [Mac](#mac)
+    - [**Install Playwright MCP Service**](#install-playwright-mcp-service)
+  - [Available Toolkits](#available-toolkits)
+  - [Available Toolkits](#available-toolkits-1)
+    - [Multimodal Toolkits (Require multimodal model capabilities)](#multimodal-toolkits-require-multimodal-model-capabilities)
+    - [Text-Based Toolkits](#text-based-toolkits)
+  - [Customizing Your Configuration](#customizing-your-configuration)
 - [🌐 Web Interface](#-web-interface)
+  - [Starting the Web UI](#starting-the-web-ui)
+  - [Features](#features)
 - [🧪 Experiments](#-experiments)
 - [⏱️ Future Plans](#️-future-plans)
 - [📄 License](#-license)
@@ -79,6 +110,7 @@ Our vision is to revolutionize how AI agents collaborate to solve real-world tas
 - [🔥 Community](#-community)
 - [❓ FAQ](#-faq)
 - [📚 Exploring CAMEL Dependency](#-exploring-camel-dependency)
+  - [Accessing CAMEL Source Code](#accessing-camel-source-code)
 - [⭐ Star History](#-star-history)
 
 # 🔥 News
@@ -150,6 +182,8 @@ This video demonstrates how to install OWL locally and showcases its capabilitie
 
 ### Install Python
 Before installing OWL, ensure you have Python installed (version 3.10, 3.11, or 3.12 is supported):
+
+> **Note for GAIA Benchmark Users**: When running the GAIA benchmark evaluation, please use the `gaia58.18` branch which includes a customized version of the CAMEL framework in the `owl/camel` directory. This version contains enhanced toolkits with improved stability specifically optimized for the GAIA benchmark compared to the standard CAMEL installation.
 
 ```bash
 # Check if Python is installed
@@ -568,6 +602,9 @@ The web interface is built using Gradio and runs locally on your machine. No dat
 # 🧪 Experiments
 
 To reproduce OWL's GAIA benchmark score of 58.18:
+Furthermore, to ensure optimal performance on the GAIA benchmark, please note that our `gaia58.18` branch includes a customized version of the CAMEL framework in the `owl/camel` directory. This version contains enhanced toolkits with improved stability for gaia benchmark compared to the standard CAMEL installation.
+
+When running the benchmark evaluation:
 
 1. Switch to the `gaia58.18` branch:
    ```bash
@@ -581,14 +618,15 @@ To reproduce OWL's GAIA benchmark score of 58.18:
 
 This will execute the same configuration that achieved our top-ranking performance on the GAIA benchmark.
 
+
 # ⏱️ Future Plans
 
 We're continuously working to improve OWL. Here's what's on our roadmap:
 
-- [ ] Write a technical blog post detailing our exploration and insights in multi-agent collaboration in real-world tasks
-- [ ] Enhance the toolkit ecosystem with more specialized tools for domain-specific tasks
-- [ ] Develop more sophisticated agent interaction patterns and communication protocols
-- [ ] Improve performance on complex multi-step reasoning tasks
+- [x] Write a technical blog post detailing our exploration and insights in multi-agent collaboration in real-world tasks
+- [x] Enhance the toolkit ecosystem with more specialized tools for domain-specific tasks
+- [x] Develop more sophisticated agent interaction patterns and communication protocols
+- [x] Improve performance on complex multi-step reasoning tasks
 
 # 📄 License
 
@@ -636,6 +674,8 @@ Join us for further discussions!
 
 # ❓ FAQ
 
+## General Questions
+
 **Q: Why don't I see Chrome running locally after starting the example script?**
 
 A: If OWL determines that a task can be completed using non-browser tools (such as search or code execution), the browser will not be launched. The browser window will only appear when OWL determines that browser-based interaction is necessary.
@@ -647,6 +687,18 @@ A: OWL supports Python 3.10, 3.11, and 3.12.
 **Q: How can I contribute to the project?**
 
 A: See our [Contributing](#-contributing) section for details on how to get involved. We welcome contributions of all kinds, from code improvements to documentation updates.
+
+## Experiment Questions
+
+**Q: Which CAMEL version should I use for replicate the role playing result?**
+
+A: We provide a modified version of CAMEL (owl/camel) in the gaia58.18 branch. Please make sure you use this CAMEL version for your experiments.
+
+**Q: Why are my experiment results lower than the reported numbers?**
+
+A: Since the GAIA benchmark evaluates LLM agents in a realistic world, it introduces a significant amount of randomness. Based on user feedback, one of the most common issues for replication is, for example, agents being blocked on certain webpages due to network reasons.
+We have uploaded a keywords matching script to help quickly filter out these errors [here](https://github.com/camel-ai/owl/blob/gaia58.18/owl/filter_failed_cases.py).
+You can also check this [technical report](https://hypnotic-mind-6bd.notion.site/OWL-Optimized-Workforce-Learning-for-General-Multi-Agent-Assistance-in-Real-World-Task-Automation-1d4004aeb21380158749c7f84b20643f?pvs=74) for more details when evaluating LLM agents in realistic open-world environments.
 
 # 📚 Exploring CAMEL Dependency
 

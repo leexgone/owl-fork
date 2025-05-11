@@ -27,9 +27,8 @@ from camel.models import ModelFactory
 from camel.toolkits import FunctionTool, MCPToolkit
 from camel.types import ModelPlatformType, ModelType
 from camel.logger import set_log_level
-from camel.utils import print_text_animated
 
-from owl.utils.enhanced_role_playing import OwlRolePlaying, arun_society
+from owl.utils.enhanced_role_playing import OwlRolePlaying
 
 import pathlib
 
@@ -261,31 +260,6 @@ async def run_society_with_formatted_output(society: OwlRolePlaying, md_filename
     return answer, chat_history, token_count
 
 
-@contextlib.asynccontextmanager
-async def mcp_toolkit_context(config_path):
-    """Context manager for safely handling MCP Toolkit connection/disconnection.
-    
-    Args:
-        config_path (str): Path to the MCP configuration file.
-        
-    Yields:
-        MCPToolkit: The connected MCPToolkit instance.
-    """
-    toolkit = MCPToolkit(config_path=str(config_path))
-    try:
-        await toolkit.connect()
-        print(Fore.GREEN + "Successfully connected to SSE server")
-        yield toolkit
-    finally:
-        # Use a separate try/except to ensure we always attempt to disconnect
-        try:
-            await toolkit.disconnect()
-            print(Fore.GREEN + "Successfully disconnected from SSE server")
-        except Exception as e:
-            # Just log the error but don't re-raise as we're in cleanup
-            print(Fore.RED + f"Warning: Error during disconnect: {e}")
-
-
 async def main():
     # Load SSE server configuration
     config_path = Path(__file__).parent / "mcp_sse_config.json"
@@ -304,28 +278,51 @@ async def main():
     # Use command line argument if provided, otherwise use default task
     task = sys.argv[1] if len(sys.argv) > 1 else default_task
     
+    mcp_toolkit = MCPToolkit(config_path=str(config_path))
+    
     try:
         # Create markdown file for conversation export
         md_filename = create_md_file(task)
         print(Fore.CYAN + f"Conversation will be saved to: {md_filename}")
         
-        async with mcp_toolkit_context(config_path) as mcp_toolkit:
-            # Get available tools
-            tools = [*mcp_toolkit.get_tools()]
-            
-            # Build and run society
-            print(Fore.YELLOW + f"Starting task: {task}\n")
-            society = await construct_society(task, tools)
-            answer, chat_history, token_count = await run_society_with_formatted_output(society, md_filename)
-            
-            print(Fore.GREEN + f"\nFinal Result: {answer}")
-            print(Fore.CYAN + f"Total tokens used: {token_count['total']}")
-            print(Fore.CYAN + f"Full conversation log saved to: {md_filename}")
+        await mcp_toolkit.connect()
+        print(Fore.GREEN + "Successfully connected to SSE server")
+        
+        # Get available tools
+        tools = [*mcp_toolkit.get_tools()]
+        
+        # Build and run society
+        print(Fore.YELLOW + f"Starting task: {task}\n")
+        society = await construct_society(task, tools)
+        answer, chat_history, token_count = await run_society_with_formatted_output(society, md_filename)
+        
+        print(Fore.GREEN + f"\nFinal Result: {answer}")
+        print(Fore.CYAN + f"Total tokens used: {token_count['total']}")
+        print(Fore.CYAN + f"Full conversation log saved to: {md_filename}")
             
     except KeyboardInterrupt:
         print(Fore.YELLOW + "\nReceived exit signal, shutting down...")
     except Exception as e:
         print(Fore.RED + f"Error occurred: {e}")
+    finally:
+        print(Fore.YELLOW + "Shutting down connections...")
+        try:
+            await asyncio.wait_for(
+                asyncio.shield(mcp_toolkit.disconnect()), 
+                timeout=3.0
+            )
+            print(Fore.GREEN + "Successfully disconnected")
+        except asyncio.TimeoutError:
+            print(Fore.YELLOW + "Disconnect timed out, but program will exit safely")
+        except asyncio.CancelledError:
+            print(Fore.YELLOW + "Disconnect was cancelled, but program will exit safely")
+        except Exception as e:
+            print(Fore.RED + f"Error during disconnect: {e}")
+            
+        try:
+            await asyncio.sleep(0.5)
+        except:
+            pass
 
 
 if __name__ == "__main__":
