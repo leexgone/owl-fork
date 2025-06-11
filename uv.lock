@@ -1833,6 +1833,22 @@ wheels = [
 ]
 
 [[package]]
+name = "mistralai"
+version = "1.7.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "eval-type-backport" },
+    { name = "httpx" },
+    { name = "pydantic" },
+    { name = "python-dateutil" },
+    { name = "typing-inspection" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/98/d0/11e0116a02aa88701422ccc048185ed8834754f3b94140bfad09620c9d11/mistralai-1.7.0.tar.gz", hash = "sha256:94e3eb23c1d3ed398a95352062fd8c92993cc3754ed18e9a35b60aa3db0bd103", size = 141981 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/60/77/eb7519ddfccb6428ac430129e7b42cc662e710cb719f82c0ffe79ab50859/mistralai-1.7.0-py3-none-any.whl", hash = "sha256:e0e75ab8508598d69ae19b14d9d7e905db6259a2de3cf9204946a27e9bf81c5d", size = 301483 },
+]
+
+[[package]]
 name = "more-itertools"
 version = "10.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2389,6 +2405,7 @@ dependencies = [
     { name = "gradio" },
     { name = "mcp-server-fetch" },
     { name = "mcp-simple-arxiv" },
+    { name = "mistralai" },
     { name = "xmltodict" },
 ]
 
@@ -2400,6 +2417,7 @@ requires-dist = [
     { name = "gradio", specifier = ">=3.50.2" },
     { name = "mcp-server-fetch", specifier = "==2025.1.17" },
     { name = "mcp-simple-arxiv", specifier = "==0.2.2" },
+    { name = "mistralai", specifier = ">=1.7.0" },
     { name = "xmltodict", specifier = ">=0.14.2" },
 ]
 
