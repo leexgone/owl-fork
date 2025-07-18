@@ -1,0 +1,57 @@
+# ── CITATION.cff ───────────────────────────────────────────────
+cff-version: 1.2.0
+title: "OWL: Optimized Workforce Learning for General Multi-Agent Assistance in Real-World Task Automation"
+message: "If you use OWL or find it helpful, please cite this paper."
+abstract: >
+  Large Language Model (LLM)-based multi-agent systems show promise for
+  automating real-world tasks but struggle to transfer across domains
+  due to their domain-specific nature. We introduce Workforce, a
+  hierarchical multi-agent framework that decouples strategic planning
+  from specialized execution via a domain-agnostic Planner, a
+  Coordinator, and domain-specific Worker agents. Optimized Workforce
+  Learning (OWL) further improves cross-domain generalization through
+  reinforcement learning from real-world feedback. Experiments on the
+  GAIA benchmark show state-of-the-art open-source performance
+  (69.70 %), surpassing commercial systems like Deep Research and
+  approaching GPT-4o. By enabling scalable generalization and modular
+  domain transfer, OWL lays a foundation for the next generation of
+  general-purpose AI assistants.
+version: "v2"          
+doi: 10.48550/arXiv.2505.23885
+url: https://arxiv.org/pdf/2505.23885
+date-released: 2025-06-11
+
+authors:
+  - family-names: Hu
+    given-names: Mengkang
+  - family-names: Zhou
+    given-names: Yuhang
+  - family-names: Fan
+    given-names: Wendong
+  - family-names: Nie
+    given-names: Yuzhou
+  - family-names: Xia
+    given-names: Bowei
+  - family-names: Sun
+    given-names: Tao
+  - family-names: Ye
+    given-names: Ziyu
+  - family-names: Jin
+    given-names: Zhaoxuan
+  - family-names: Li
+    given-names: Yingru
+  - family-names: Chen
+    given-names: Qiguang
+  - family-names: Zhang
+    given-names: Zeyu
+  - family-names: Wang
+    given-names: Yifeng
+  - family-names: Ye
+    given-names: Qianshuo
+  - family-names: Ghanem
+    given-names: Bernard
+  - family-names: Luo
+    given-names: Ping
+  - family-names: Li
+    given-names: Guohao
+# ───────────────────────────────────────────────────────────────

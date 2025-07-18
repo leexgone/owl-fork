@@ -28,7 +28,7 @@
 [Community](https://github.com/camel-ai/owl#community) |
 [Installation](#️-installation) |
 [Examples](https://github.com/camel-ai/owl/tree/main/owl) |
-[Paper](https://github.com/camel-ai/owl/blob/main/assets/OWL_Technical_Report.pdf) |
+[Paper](https://arxiv.org/abs/2505.23885) |
 <!-- [Technical Report](https://hypnotic-mind-6bd.notion.site/OWL-Optimized-Workforce-Learning-for-General-Multi-Agent-Assistance-in-Real-World-Task-Automation-1d4004aeb21380158749c7f84b20643f) | -->
 [Citation](https://github.com/camel-ai/owl#citation) |
 [Contributing](https://github.com/camel-ai/owl/graphs/contributors) |
@@ -105,12 +105,14 @@ Our vision is to revolutionize how AI agents collaborate to solve real-world tas
 - [🧪 Experiments](#-experiments)
 - [⏱️ Future Plans](#️-future-plans)
 - [📄 License](#-license)
-- [🖊️ Cite](#️-cite)
 - [🤝 Contributing](#-contributing)
 - [🔥 Community](#-community)
 - [❓ FAQ](#-faq)
+  - [General Questions](#general-questions)
+  - [Experiment Questions](#experiment-questions)
 - [📚 Exploring CAMEL Dependency](#-exploring-camel-dependency)
   - [Accessing CAMEL Source Code](#accessing-camel-source-code)
+- [🖊️ Cite](#️-cite)
 - [⭐ Star History](#-star-history)
 
 # 🔥 News
@@ -143,7 +145,7 @@ Our vision is to revolutionize how AI agents collaborate to solve real-world tas
   </p>
 </div>
 
-- **[2025.05.27]**: We released the technical report of OWL, including more details on the workforce (framework) and optimized workforce learning (training methodology).  [paper](https://github.com/camel-ai/owl/blob/main/assets/OWL_Technical_Report.pdf).
+- **[2025.05.27]**: We released the technical report of OWL, including more details on the workforce (framework) and optimized workforce learning (training methodology).  [paper](https://arxiv.org/abs/2505.23885).
 - **[2025.05.18]**: We open-sourced an initial version for replicating workforce experiment on GAIA [here](https://github.com/camel-ai/owl/tree/gaia69).
 - **[2025.04.18]**: We uploaded OWL's new GAIA benchmark score of **69.09%**, ranking #1 among open-source frameworks. Check the technical report [here](https://hypnotic-mind-6bd.notion.site/OWL-Optimized-Workforce-Learning-for-General-Multi-Agent-Assistance-in-Real-World-Task-Automation-1d4004aeb21380158749c7f84b20643f).
 - **[2025.03.27]**: Integrate SearxNGToolkit performing web searches using SearxNG search engine.
@@ -634,20 +636,6 @@ We're continuously working to improve OWL. Here's what's on our roadmap:
 
 The source code is licensed under Apache 2.0.
 
-# 🖊️ Cite
-
-If you find this repo useful, please cite:
-
-
-```
-@article{hu2025owl,
-  title={Owl: Optimized workforce learning for general multi-agent assistance in real-world task automation},
-  author={Hu, Mengkang and Zhou, Yuhang and Fan, Wendong and Nie, Yuzhou and Xia, Bowei and Sun, Tao and Ye, Ziyu and Jin, Zhaoxuan and Li, Yingru and Chen, Qiguang and others},
-  journal={arXiv preprint arXiv:2505.23885},
-  year={2025}
-}
-```
-
 # 🤝 Contributing
 
 We welcome contributions from the community! Here's how you can help:
@@ -672,7 +660,7 @@ Join us ([*Discord*](https://discord.camel-ai.org/) or [*WeChat*](https://ghli.o
 
 Join us for further discussions!
 <!-- ![](./assets/community.png) -->
-![](./assets/community.jpeg)
+![](./assets/community_code.jpeg)
 
 # ❓ FAQ
 
@@ -712,6 +700,23 @@ OWL is built on top of the [CAMEL](https://github.com/camel-ai/camel) Framework,
 # Clone the CAMEL repository
 git clone https://github.com/camel-ai/camel.git
 cd camel
+```
+
+# 🖊️ Cite
+
+If you find this repo useful, please cite:
+
+
+```
+@misc{hu2025owl,
+      title={OWL: Optimized Workforce Learning for General Multi-Agent Assistance in Real-World Task Automation}, 
+      author={Mengkang Hu and Yuhang Zhou and Wendong Fan and Yuzhou Nie and Bowei Xia and Tao Sun and Ziyu Ye and Zhaoxuan Jin and Yingru Li and Qiguang Chen and Zeyu Zhang and Yifeng Wang and Qianshuo Ye and Bernard Ghanem and Ping Luo and Guohao Li},
+      year={2025},
+      eprint={2505.23885},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2505.23885}, 
+}
 ```
 
 # ⭐ Star History
